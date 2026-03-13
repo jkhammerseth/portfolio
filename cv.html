@@ -50,8 +50,23 @@
 <body>
   <a href="index.html" class="back-button">
     <span>←</span>
-    <span>Back</span>
+    <span id="back-text">Back</span>
   </a>
-  <embed src="CV2026.pdf" type="application/pdf" class="pdf-embed">
+  <embed id="cv-embed" src="CV2026.pdf" type="application/pdf" class="pdf-embed">
+
+  <script>
+    // Load the correct CV based on language preference
+    const lang = localStorage.getItem('lang') || 'en';
+    const cvEmbed = document.getElementById('cv-embed');
+    const backText = document.getElementById('back-text');
+
+    if (lang === 'en') {
+      cvEmbed.src = 'CV2026_eng.pdf';
+      backText.textContent = 'Back';
+    } else {
+      cvEmbed.src = 'CV2026.pdf';
+      backText.textContent = 'Tilbake';
+    }
+  </script>
 </body>
 </html>

@@ -7,353 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg: #F7F5F2;
-      --ink: #1A1916;
-      --muted: #8A877F;
-      --accent: #C8A96E;
-      --line: #E2DED8;
-    }
-
-    [data-theme="dark"] {
-      --bg: #1A1916;
-      --ink: #F7F5F2;
-      --muted: #A8A49A;
-      --accent: #D4B57F;
-      --line: #2F2D28;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--ink);
-      font-family: 'DM Mono', monospace;
-      font-weight: 300;
-      font-size: 14px;
-      line-height: 1.7;
-      min-height: 100vh;
-      transition: background 0.3s, color 0.3s;
-    }
-
-    /* ── Layout ── */
-    .page {
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 80px 24px 120px;
-    }
-
-    /* ── Header ── */
-    header {
-      margin-bottom: 80px;
-      opacity: 0;
-      animation: fadeUp 0.7s ease forwards;
-      text-align: center;
-    }
-
-    .profile-photo {
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin: 0 auto 32px;
-      display: block;
-      border: 3px solid var(--line);
-      box-shadow: 0 4px 12px rgba(26, 25, 22, 0.08);
-    }
-
-    .name {
-      font-family: 'Instrument Serif', serif;
-      font-size: clamp(2.8rem, 8vw, 4.5rem);
-      line-height: 1.05;
-      letter-spacing: -0.02em;
-      color: var(--ink);
-      margin-bottom: 16px;
-    }
-
-    .name em {
-      font-style: italic;
-      color: var(--accent);
-    }
-
-    .tagline {
-      color: var(--muted);
-      font-size: 13px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .tagline span {
-      display: inline-block;
-      width: 24px;
-      height: 1px;
-      background: var(--accent);
-      vertical-align: middle;
-      margin: 0 10px 2px 0;
-    }
-
-    .contact-buttons {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 32px;
-    }
-
-    .contact-btn {
-      text-decoration: none;
-      color: var(--ink);
-      background: transparent;
-      border: 1px solid var(--line);
-      padding: 10px 20px;
-      font-size: 12px;
-      letter-spacing: 0.05em;
-      transition: all 0.2s;
-      border-radius: 2px;
-      font-family: 'DM Mono', monospace;
-      font-weight: 400;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .contact-btn svg {
-      width: 16px;
-      height: 16px;
-    }
-
-    /* LinkedIn and GitHub use fill */
-    .contact-btn:nth-child(2) svg,
-    .contact-btn:nth-child(3) svg {
-      fill: currentColor;
-    }
-
-    /* Email and CV use stroke */
-    .contact-btn:nth-child(1) svg,
-    .contact-btn:nth-child(4) svg {
-      fill: none;
-      stroke: currentColor;
-    }
-
-    .contact-btn:hover {
-      border-color: var(--accent);
-      background: var(--accent);
-      color: white;
-    }
-
-    /* ── Sections ── */
-    section {
-      margin-bottom: 64px;
-      opacity: 0;
-      animation: fadeUp 0.7s ease forwards;
-    }
-
-    section:nth-child(2) { animation-delay: 0.1s; }
-    section:nth-child(3) { animation-delay: 0.2s; }
-    section:nth-child(4) { animation-delay: 0.3s; }
-    section:nth-child(5) { animation-delay: 0.4s; }
-    section:nth-child(6) { animation-delay: 0.5s; }
-
-    .section-label {
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 28px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .section-label::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--line);
-    }
-
-    /* ── Skills ── */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-    }
-
-    .skill-group {
-      padding: 20px 0;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .skill-group:nth-child(odd) {
-      padding-right: 32px;
-      border-right: 1px solid var(--line);
-    }
-
-    .skill-group:nth-child(even) {
-      padding-left: 32px;
-    }
-
-    .skill-group:last-child,
-    .skill-group:nth-last-child(2):nth-child(odd) {
-      border-bottom: none;
-    }
-
-    .skill-category {
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 8px;
-      font-weight: 500;
-    }
-
-    .skill-list {
-      color: var(--ink);
-      font-size: 13px;
-      line-height: 1.9;
-    }
-
-    /* ── Experience ── */
-    .job {
-      padding: 24px 0;
-      border-bottom: 1px solid var(--line);
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 16px;
-      align-start: start;
-    }
-
-    .job:last-child { border-bottom: none; }
-
-    .job-title {
-      font-family: 'Instrument Serif', serif;
-      font-size: 1.15rem;
-      color: var(--ink);
-      margin-bottom: 2px;
-      line-height: 1.3;
-    }
-
-    .job-company {
-      color: var(--muted);
-      font-size: 12px;
-      letter-spacing: 0.05em;
-      margin-bottom: 10px;
-    }
-
-    .job-desc {
-      font-size: 13px;
-      color: var(--ink);
-      opacity: 0.75;
-      line-height: 1.75;
-    }
-
-    .job-date {
-      font-size: 11px;
-      color: var(--muted);
-      letter-spacing: 0.05em;
-      white-space: nowrap;
-      text-align: right;
-      padding-top: 3px;
-    }
-
-    .job-badge {
-      display: inline-block;
-      font-size: 10px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      background: var(--accent);
-      color: white;
-      padding: 2px 8px;
-      border-radius: 2px;
-      margin-top: 6px;
-    }
-
-    /* ── Footer ── */
-    footer {
-      margin-top: 80px;
-      padding-top: 24px;
-      border-top: 1px solid var(--line);
-      color: var(--muted);
-      font-size: 11px;
-      letter-spacing: 0.06em;
-      display: flex;
-      justify-content: space-between;
-      opacity: 0;
-      animation: fadeUp 0.7s ease 0.4s forwards;
-    }
-
-    /* ── Theme Toggle ── */
-    .theme-toggle {
-      position: fixed;
-      top: 24px;
-      right: 24px;
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: var(--bg);
-      border: 1px solid var(--line);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s;
-      z-index: 1000;
-    }
-
-    .theme-toggle:hover {
-      border-color: var(--accent);
-      background: var(--accent);
-    }
-
-    .theme-toggle svg {
-      width: 20px;
-      height: 20px;
-      transition: fill 0.3s, stroke 0.3s;
-    }
-
-    .theme-toggle .sun {
-      stroke: var(--ink);
-      fill: none;
-    }
-
-    .theme-toggle .moon {
-      fill: var(--ink);
-      stroke: none;
-    }
-
-    .theme-toggle:hover .sun {
-      stroke: white;
-    }
-
-    .theme-toggle:hover .moon {
-      fill: white;
-    }
-
-    .theme-toggle .sun { display: none; }
-    .theme-toggle .moon { display: block; }
-
-    [data-theme="dark"] .theme-toggle .sun { display: block; }
-    [data-theme="dark"] .theme-toggle .moon { display: none; }
-
-    /* ── Animation ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(16px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ── Responsive ── */
-    @media (max-width: 520px) {
-      .skills-grid { grid-template-columns: 1fr; }
-      .skill-group:nth-child(odd) { border-right: none; padding-right: 0; }
-      .skill-group:nth-child(even) { padding-left: 0; }
-      .skill-group:nth-last-child(2) { border-bottom: 1px solid var(--line); }
-      .job { grid-template-columns: 1fr; }
-      .job-date { text-align: left; }
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <button class="theme-toggle" aria-label="Toggle theme">
@@ -372,12 +26,15 @@
     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
   </svg>
 </button>
+<button class="lang-toggle" aria-label="Toggle language">
+  <span class="lang-text">NO</span>
+</button>
 <div class="page">
 
   <header>
     <img src="profile.jpg" alt="Jonas Hammerseth" class="profile-photo">
     <h1 class="name">Jonas<br><em>Hammerseth</em></h1>
-    <p class="tagline"><span></span>Software Developer — Bergen, Norway</p>
+    <p class="tagline"><span class="tagline-line"></span><span data-i18n="tagline">Software Developer — Bergen, Norway</span></p>
     <div class="contact-buttons">
       <a href="mailto:jkhammerseth@gmail.com" class="contact-btn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -385,19 +42,19 @@
           <path d="M2 7l9.5 6.5a1 1 0 0 0 1 0L22 7"/>
           <path d="M2 7l10 6.5L22 7"/>
         </svg>
-        Email
+        <span data-i18n="btn.email">Email</span>
       </a>
       <a href="https://linkedin.com/in/jonas-hammerseth-645684163/" target="_blank" class="contact-btn">
         <svg viewBox="0 0 24 24">
           <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
         </svg>
-        LinkedIn
+        <span data-i18n="btn.linkedin">LinkedIn</span>
       </a>
       <a href="https://github.com/jkhammerseth" target="_blank" class="contact-btn">
         <svg viewBox="0 0 24 24">
           <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
         </svg>
-        GitHub
+        <span data-i18n="btn.github">GitHub</span>
       </a>
       <a href="cv.html" class="contact-btn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -408,130 +65,134 @@
           <line x1="16" y1="16" x2="8" y2="16"/>
           <line x1="16" y1="20" x2="8" y2="20"/>
         </svg>
-        View CV
+        <span data-i18n="btn.cv">View CV</span>
       </a>
     </div>
   </header>
 
   <!-- Skills -->
   <section>
-    <p class="section-label">Skills & Tech</p>
+    <p class="section-label" data-i18n="section.skills">Skills & Tech</p>
     <div class="skills-grid">
       <div class="skill-group">
-        <p class="skill-category">Backend</p>
-        <p class="skill-list">Python · FastAPI<br>Java · Spring Boot<br>Go · Node.js<br>PostgreSQL · DuckDB</p>
+        <p class="skill-category" data-i18n="skills.backend">Backend</p>
+        <p class="skill-list">Python · FastAPI<br>Java · Spring Boot<br>Go · Node.js · REST APIs<br>PostgreSQL · DuckDB</p>
       </div>
       <div class="skill-group">
-        <p class="skill-category">Frontend</p>
-        <p class="skill-list">React · Svelte · TypeScript<br>Next.js · Tailwind CSS<br>HTML / CSS · REST APIs</p>
+        <p class="skill-category" data-i18n="skills.frontend">Frontend</p>
+        <p class="skill-list">React · Svelte · TypeScript<br>Next.js · Tailwind CSS<br>HTML / CSS</p>
       </div>
       <div class="skill-group">
-        <p class="skill-category">Data & ETL</p>
-        <p class="skill-list">dbt · SQL<br>PostgreSQL · MongoDB<br>AWS (S3, Batch, ECS)</p>
+        <p class="skill-category" data-i18n="skills.data">Data & ETL</p>
+        <p class="skill-list">dbt · dlthub · SQL<br>PostgreSQL · MongoDB</p>
       </div>
       <div class="skill-group">
-        <p class="skill-category">Tools & Infra</p>
-        <p class="skill-list">Docker · Git<br>Keycloak · Terraform <br></p>
+        <p class="skill-category" data-i18n="skills.tools">Tools & Infra</p>
+        <p class="skill-list">Docker · Git · Terraform<br>AWS (ECS, Lambda, RDS, S3, EFS, CloudWatch)<br>Azure (Container Instances) · Datadog</p>
       </div>
     </div>
   </section>
 
   <!-- Experience -->
   <section>
-    <p class="section-label">Work Experience</p>
+    <p class="section-label" data-i18n="section.experience">Work Experience</p>
 
     <div class="job">
       <div>
-        <p class="job-title">Software Developer</p>
-        <p class="job-company">AquaCloud</p>
-        <p class="job-desc">Technical ownership of APIs, ETL pipelines, and analytical systems for salmon biomass and mortality tracking. Built data platform infrastructure with FastAPI, dbt, DuckDB, and AWS. Collaborated with research institutes including Fiskeridirektoratet and FHF.</p>
+        <p class="job-title" data-i18n="job.knowit.title">Software Developer</p>
+        <p class="job-company" data-i18n="job.knowit.company">Knowit Experience Bergen</p>
+        <p class="job-desc" data-i18n="job.knowit.desc">Consulting engagement at DNV, working on the Veracity data platform. Building data-driven solutions across backend, ETL, and cloud infrastructure.</p>
+        <span class="job-badge" data-i18n="job.knowit.badge">Current</span>
       </div>
-      <p class="job-date">2025 — 2026</p>
+      <p class="job-date" data-i18n="job.knowit.date">2026 —</p>
     </div>
 
     <div class="job">
       <div>
-        <p class="job-title">Board Member & Finance Lead</p>
-        <p class="job-company">echo Webkom, UiB</p>
-        <p class="job-desc">Development and operations of websites for the computer science student organization at UiB. Managed finances and contributed to technical decisions.</p>
+        <p class="job-title" data-i18n="job.aquacloud.title">Software Developer</p>
+        <p class="job-company" data-i18n="job.aquacloud.company">AquaCloud</p>
+        <p class="job-desc" data-i18n="job.aquacloud.desc">Technical ownership of APIs, ETL pipelines, and analytical systems for salmon biomass and mortality tracking. Built data platform infrastructure with FastAPI, dbt, DuckDB, and AWS. Collaborated with research institutes including Fiskeridirektoratet and FHF.</p>
       </div>
-      <p class="job-date">2022 — 2024</p>
+      <p class="job-date" data-i18n="job.aquacloud.date">2025 — 2026</p>
+    </div>
+
+    <div class="job">
+      <div>
+        <p class="job-title" data-i18n="job.echo.title">Board Member & Finance Lead</p>
+        <p class="job-company" data-i18n="job.echo.company">echo Webkom, UiB</p>
+        <p class="job-desc" data-i18n="job.echo.desc">Development and operations of websites for the computer science student organization at UiB. Managed finances and contributed to technical decisions.</p>
+      </div>
+      <p class="job-date" data-i18n="job.echo.date">2022 — 2024</p>
     </div>
 
   </section>
 
   <!-- Education -->
   <section>
-    <p class="section-label">Education</p>
+    <p class="section-label" data-i18n="section.education">Education</p>
 
     <div class="job">
       <div>
-        <p class="job-title">Master in Software Development</p>
-        <p class="job-company">University of Bergen / Western Norway University of Applied Sciences</p>
-        <p class="job-desc">Specialized in algorithms, advanced software technologies, programming languages, model-driven software development, and software security.</p>
+        <p class="job-title" data-i18n="edu.master.title">Master in Software Development</p>
+        <p class="job-company" data-i18n="edu.master.institution">University of Bergen / Western Norway University of Applied Sciences</p>
+        <p class="job-desc" data-i18n="edu.master.desc">Specialized in algorithms, advanced software technologies, programming languages, model-driven software development, and software security.</p>
       </div>
-      <p class="job-date">2022 — 2024</p>
+      <p class="job-date" data-i18n="edu.master.date">2022 — 2024</p>
     </div>
 
     <div class="job">
       <div>
-        <p class="job-title">Bachelor in Cognitive Science</p>
-        <p class="job-company">University of Bergen</p>
-        <p class="job-desc">Specialization in computer science. Focus on machine learning, functional programming, algorithms and data structures.</p>
+        <p class="job-title" data-i18n="edu.bachelor.title">Bachelor in Cognitive Science</p>
+        <p class="job-company" data-i18n="edu.bachelor.institution">University of Bergen</p>
+        <p class="job-desc" data-i18n="edu.bachelor.desc">Specialization in computer science. Focus on machine learning, functional programming, algorithms and data structures.</p>
       </div>
-      <p class="job-date">2018 — 2022</p>
+      <p class="job-date" data-i18n="edu.bachelor.date">2018 — 2022</p>
     </div>
 
   </section>
 
   <!-- Projects -->
   <section>
-    <p class="section-label">Projects</p>
+    <p class="section-label" data-i18n="section.projects">Projects</p>
 
     <div class="job">
       <div>
-        <p class="job-title">Budget Tracker</p>
-        <p class="job-company">Personal Project · <a href="https://github.com/jkhammerseth/budget-tracker" target="_blank" style="color: var(--accent); text-decoration: none;">GitHub</a></p>
-        <p class="job-desc">Developing a budget tracking tool for personal finance management with expense categorization, periodic payment planning, and graphical consumption visualization. Features an interactive calendar for financial planning and support for shared expenses. Built with Go backend, Svelte frontend, and dockerized PostgreSQL.</p>
-        <span class="job-badge">Ongoing</span>
+        <p class="job-title" data-i18n="project.budget.title">Budget Tracker</p>
+        <p class="job-company"><span data-i18n="project.budget.company">Personal Project</span> · <a href="https://github.com/jkhammerseth/budget-tracker" target="_blank" style="color: var(--accent); text-decoration: none;">GitHub</a></p>
+        <p class="job-desc" data-i18n="project.budget.desc">Developing a budget tracking tool for personal finance management with expense categorization, periodic payment planning, and graphical consumption visualization. Features an interactive calendar for financial planning and support for shared expenses. Built with Go backend, Svelte frontend, and dockerized PostgreSQL.</p>
+        <span class="job-badge" data-i18n="project.budget.badge">Ongoing</span>
       </div>
-      <p class="job-date">2024 —</p>
+      <p class="job-date" data-i18n="project.budget.date">2024 —</p>
     </div>
 
     <div class="job">
       <div>
-        <p class="job-title">Design and Evaluation of a Data Space Service for the Smart Ocean Platform</p>
-        <p class="job-company">Master Thesis · SFI Smart Ocean</p>
-        <p class="job-desc">Developed REST API, data forwarding, and database solution for storing and providing access to sensor data. Built with Python, FastAPI, MQTT, and MongoDB.</p>
+        <p class="job-title" data-i18n="project.thesis.title">Design and Evaluation of a Data Space Service for the Smart Ocean Platform</p>
+        <p class="job-company"><span data-i18n="project.thesis.company">Master Thesis · SFI Smart Ocean</span> · <a href="https://github.com/smartoceanplatform/dataspace-service" target="_blank" style="color: var(--accent); text-decoration: none;">GitHub</a></p>
+        <p class="job-desc" data-i18n="project.thesis.desc">Developed REST API, data forwarding, and database solution for storing and providing access to sensor data. Built with Python, FastAPI, MQTT, and MongoDB.</p>
       </div>
-      <p class="job-date">2024</p>
+      <p class="job-date" data-i18n="project.thesis.date">2024</p>
+    </div>
+
+    <div class="job">
+      <div>
+        <p class="job-title" data-i18n="project.shroomy.title">Shroomy - AI Mushroom Identifier</p>
+        <p class="job-company"><span data-i18n="project.shroomy.company">Academic Project · HVL</span> · <a href="https://github.com/jkhammerseth/shroomyApp" target="_blank" style="color: var(--accent); text-decoration: none;">GitHub</a></p>
+        <p class="job-desc" data-i18n="project.shroomy.desc">Developed backend REST API for AI-powered mushroom identification from images. Implemented image classification endpoint using FastAI/PyTorch model with top-5 predictions and confidence scores. Built multi-image prediction feature that averages probabilities across multiple images for improved accuracy. Backend built with Django REST Framework, MongoDB, and OpenCV.</p>
+      </div>
+      <p class="job-date" data-i18n="project.shroomy.date">2023</p>
     </div>
 
   </section>
 
   <footer>
-    <span>Jonas Hammerseth</span>
-    <span>Bergen, Norway · 2026</span>
+    <span data-i18n="footer.name">Jonas Hammerseth</span>
+    <span data-i18n="footer.location">Bergen, Norway · 2026</span>
   </footer>
 
 </div>
 
-<script>
-  // Theme toggle functionality
-  const themeToggle = document.querySelector('.theme-toggle');
-  const htmlElement = document.documentElement;
-
-  // Check for saved theme preference or default to light mode
-  const currentTheme = localStorage.getItem('theme') || 'light';
-  htmlElement.setAttribute('data-theme', currentTheme);
-
-  themeToggle.addEventListener('click', () => {
-    const theme = htmlElement.getAttribute('data-theme');
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-
-    htmlElement.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-  });
-</script>
+<script src="translations.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
